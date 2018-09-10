@@ -10,13 +10,13 @@ const CardContainer = ({
   averages, 
   selectLocation, 
   toggleHelperInfo, 
-  toggleDropDown,
-  changeDistrictData
+  changeDistrictData,
+  displayHelperInfo
 }) => {
   const displayCards = cards.map( (card, index) => (
     <Card {...card} selectLocation={selectLocation} key={index} />
   ));
-
+  const cardBtn = displayHelperInfo ? '' : 'CardContainer__btn--unfocus';
   let displayCompared = <p></p>;
 
   if (averages.compared >= 0) {
@@ -33,12 +33,10 @@ const CardContainer = ({
   return (
     <div className='CardContainer'>
       <button 
-        className='CardContainer__btn'
+        className={'CardContainer__btn ' + cardBtn}
         onClick={ () => toggleHelperInfo() } > ? </button>
-      <HelperInfo toggleHelperInfo={toggleHelperInfo} />
-      <DistrictDropDown 
-        toggleDropDown={toggleDropDown} 
-        changeDistrictData={changeDistrictData} />
+      <HelperInfo toggleHelperInfo={toggleHelperInfo} displayHelperInfo={displayHelperInfo}/>
+      <DistrictDropDown changeDistrictData={changeDistrictData} />
       <section className='CardContainer__section'>
         {displayCards}
       </section>
@@ -60,6 +58,6 @@ CardContainer.propTypes = {
   averages: PropTypes.objectOf(PropTypes.number),
   selectLocation: PropTypes.func,
   toggleHelperInfo: PropTypes.func,
-  toggleDropDown: PropTypes.func,
-  changeDistrictData: PropTypes.func
+  changeDistrictData: PropTypes.func,
+  displayHelperInfo: PropTypes.bool
 };
